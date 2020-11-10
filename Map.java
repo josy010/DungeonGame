@@ -1,18 +1,19 @@
 package dungeonrunproject;
 
 import java.util.*;
-///DÖp om till map
+
 public class Map {
-    
-    String ANSI_RESET = "\033[0m"; 
+
+    String ANSI_RESET = "\033[0m";
     String ANSI_GREEN = "\033[32;1m";
-    String ANSI_RED = "\033[31;1m"; 
-    String ANSI_YELLOW = "\033[33;1m"; 
+    String ANSI_RED = "\033[31;1m";
+    String ANSI_YELLOW = "\033[33;1m";
     String ANSI_PURPLE = "\033[35;1m";
-    String ANSI_BLUE = "\033[34;1m"; 
-    String ANSI_CYAN = "\033[36;1m"; 
-    String ANSI_WHITE = "\033[37;1m"; 
+    String ANSI_BLUE = "\033[34;1m";
+    String ANSI_CYAN = "\033[36;1m";
+    String ANSI_WHITE = "\033[37;1m";
     Scanner input = new Scanner(System.in);
+    Random rand = new Random();
     int mapChoice;
     int position = 0;
     int[][] mapSmall = new int[4][4];
@@ -20,7 +21,7 @@ public class Map {
     int[][] mapLarge = new int[8][8];
 
     public void welcomeMessage() {
-        System.out.println(ANSI_YELLOW +"  .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:." + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "  .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:." + ANSI_RESET);
         System.out.println();
         System.out.println("           _.--\"\"\"\"\"--._");
         System.out.println("           /                \\         WELCOME TO THE MAP ");
@@ -48,18 +49,27 @@ public class Map {
 
         System.out.println("  _^__                                                               __^__");
         System.out.println("( ___ )-------------------------------------------------------------( ___ )");
-        System.out.println(" | / |            The adventure will follow a map                    | \\ |");
-        System.out.println(" | / |    In each room of the map something may occur,               | \\ |");
-        System.out.println(" | / |       either one or more monster will appaer,                 | \\ |");
-        System.out.println(" | / |          and/or treasure(s) will be found.                    | \\ |");
-        System.out.println(" | / |    This is random, no one knows what will happen.             | \\ |");
-        System.out.println(" | / |     When you have won all fights and visited all rooms        | \\ |");
-        System.out.println(" | / |  the game is at end. The game also ends if you get defeated   | \\ |");
-        System.out.println(" |___|       You will also have the choice to leave the map.         |___|");
+        System.out.println(" | / |             The adventure will follow a map.                  | \\ |");
+        System.out.println(" | / |      In each room of the map something may occur,             | \\ |");
+        System.out.println(" | / |       either one or multiple monsters may appaer,             | \\ |");
+        System.out.println(" | / |             and/or treasures will be found.                   | \\ |");
+        System.out.println(" | / | Everything is random, no one knows exactly what might happen. | \\ |");
+        System.out.println(" | / |       After entered room, the room will appear as a 0,        | \\ |");
+        System.out.println(" | / |        meaning that the room has already been visited.        | \\ |");
+        System.out.println(" | / |                                                               | \\ |");
+        System.out.println(" | / |         When you have won all fights and visited              | \\ |");
+        System.out.println(" | / |       all rooms on the map, you have won the game.            | \\ |");
+        System.out.println(" |___|   The game may also end if you get defeated during the game.  |___|");
+        System.out.println(" |___|    You will also have the choice to leave the map if needed.  |___|");
+        System.out.println(" |___|                                                               |___|");
+        System.out.println(" |___|                         Good luck!                            |___|");
         System.out.println("(_____)-------------------------------------------------------------(_____)");
         System.out.println();
 
+          //System.out.println(" | / |                                                               | \\ |");
+          //System.out.println(" |___|                                                               |___|");
     }
+     
 
     public int selectMap() {
         System.out.println(ANSI_CYAN + "You can choose between the following adventures: " + ANSI_RESET);
@@ -67,7 +77,7 @@ public class Map {
         System.out.println(ANSI_CYAN + "2) Map medium" + ANSI_RESET);
         System.out.println(ANSI_CYAN + "3) Map large" + ANSI_RESET);
         System.out.println();
-        System.out.println("Your choice: ");
+        System.out.println(ANSI_CYAN + "Your choice: " + ANSI_RESET);
 
         while (true) {
 
@@ -90,35 +100,51 @@ public class Map {
     public void showMap() {
         if (mapChoice == 1) {
             mapSmall();
+            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
+            System.out.println(ANSI_CYAN + "For map small: 1) NorthWest, 4) NorthEast, 13) SouthWest, 16) SoutEast" + ANSI_RESET);
+   
         } else if (mapChoice == 2) {
             mapMedium();
+            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
+            System.out.println(ANSI_CYAN + "For map medium: 1) NorthWest, 5) NorthEast, 18) SouthWest, 22) SoutEast" + ANSI_RESET);
+            
         } else if (mapChoice == 3) {
             mapLarge();
+            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
+            System.out.println(ANSI_CYAN + "For map large: 1) NorthWest, 8) NorthEast, 57) SouthWest, 64) SoutEast" + ANSI_RESET);
+            
         }
 
     }
 
-    //SKulle behöva en try catch
+   //Lös detta. 
     public int choiceOfStartPosition() {
         while (true) {
-            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
-            System.out.println(ANSI_PURPLE + "For map small: 1) NorthWest, 4) NorthEast, 13) SouthWest, 16) SoutEast" + ANSI_RESET);
-            System.out.println(ANSI_YELLOW + "For map medium: 1) NorthWest, 5) NorthEast, 18) SouthWest, 22) SoutEast"+ ANSI_RESET);
-            System.out.println(ANSI_RED + "For map large: 1) NorthWest, 8) NorthEast, 57) SouthWest, 64) SoutEast" + ANSI_RESET);
+            System.out.println(ANSI_CYAN + "\nYour choice: " + ANSI_RESET);
             position = input.nextInt();
-            if (position == 1) {
-                System.out.println("You chose to start in the northwest corner");
+            //prova if else 
+            if(mapChoice == 1){
+                if ((position == 1)||(position == 4) || (position == 13) || (position == 16)) {
+                System.out.println("Your current position");
                 return position;
-            } else if ((position == 4) || (position == 5) || (position == 8)) {
-                System.out.println("You chose to start in the northeast corner");
+            }
+             if(mapChoice == 2){
+            } if ((position == 1) || (position == 5) ||(position == 18) || (position == 22)) {
+                System.out.println("You chose this");
                 return position;
-            } else if ((position == 13) || (position == 17) || (position == 57)) {
+            }
+            
+            if(mapChoice == 3){
+            } if ((position == 1) || (position == 13) ||(position == 57) || (position == 64)) {
                 System.out.println("You chose to start in the southwest corner");
                 return position;
-            } else if ((position == 16) || (position == 22) || (position == 64)) {
+            } 
+            
+            /*else if ((position == 16) || (position == 22) || (position == 64)) {
                 System.out.println("You chose to start in the southeast corner");
                 return position;
-
+            }*/
+            
             } else {
                 System.out.println("Wrong input");
             }
@@ -137,6 +163,7 @@ public class Map {
         position = input.nextInt();
         input.nextLine();
 
+        //Har det något med att göra att man har skrivit && istället för || ??
         if ((position == 6) && (position == 7) && (position == 10) && (position == 11)) {
             System.out.println("North:1, South:2, East:3 or West:4");
         }
@@ -349,26 +376,23 @@ public class Map {
         }
         System.out.println("---------------------------------------");
     }
-    
-    public void visitedRoom(){
-        if(mapChoice == 1) {
+
+    public void visitedRoom() {
+        if (mapChoice == 1) {
             visitedRoomSmall();
-        }
-        else if(mapChoice == 2) {
+        } else if (mapChoice == 2) {
             visitedRoomMedium();
-        }
-        else if(mapChoice == 3){
+        } else if (mapChoice == 3) {
             visitedRoomLarge();
         }
     }
-    
+
     public void visitedRoomSmall() {
         for (int k = 0; k < mapSmall.length; k++) {
             for (int l = 0; l < mapSmall.length; l++) {
 
                 if (mapSmall[k][l] == position) {
                     mapSmall[k][l] = 0;
-                    System.out.println("fortsätt spelet " + mapSmall[k][l]); //kolla så det stämmer printout
                 }
             }
         }
@@ -396,7 +420,6 @@ public class Map {
 
                 if (mapMedium[k][l] == position) {
                     mapMedium[k][l] = 0;
-                    System.out.println("fortsätt spelet " + mapMedium[k][l]); //kolla så det stämmer printout
                 }
             }
         }
@@ -416,14 +439,13 @@ public class Map {
         }
         System.out.println("------------------");
     }
-    
+
     public void visitedRoomLarge() {
         for (int k = 0; k < mapLarge.length; k++) {
             for (int l = 0; l < mapLarge.length; l++) {
 
                 if (mapLarge[k][l] == position) {
                     mapLarge[k][l] = 0;
-                    System.out.println("fortsätt spelet " + mapLarge[k][l]); //kolla så det stämmer printout
                 }
             }
         }
@@ -443,6 +465,4 @@ public class Map {
         }
         System.out.println("------------------");
     }
-
 }
-
