@@ -96,25 +96,16 @@ public class Map {
 
     }
 
-    //Valde att lägga över texten i denna metod för att inte behöva göra om metoderna för mycket. Uträkningarna kommer i choiceofstartposition()
-    //I och med att vi har så många metoder i varandra som kallar, vill jag inte ändra om för mcýcket i dem, utan valde att göra en lätt lösning
-    //Loop, svårt att börja följa var man är och vad det är som sker
-    //Skulle behöva förtydliga var vi är i kartan. Vi har skrivit &&, är det istället för ||. 
+   
     public void showMap() {
         if (mapChoice == 1) {
             mapSmall();
-            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
-            System.out.println(ANSI_CYAN + "For map small: 1) NorthWest, 4) NorthEast, 13) SouthWest, 16) SoutEast" + ANSI_RESET);
 
         } else if (mapChoice == 2) {
             mapMedium();
-            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
-            System.out.println(ANSI_CYAN + "For map medium: 1) NorthWest, 5) NorthEast, 18) SouthWest, 22) SoutEast" + ANSI_RESET);
 
         } else if (mapChoice == 3) {
             mapLarge();
-            System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
-            System.out.println(ANSI_CYAN + "For map large: 1) NorthWest, 8) NorthEast, 57) SouthWest, 64) SoutEast" + ANSI_RESET);
 
         }
 
@@ -124,26 +115,23 @@ public class Map {
         boolean running = true;
 
         while (running) {
-            System.out.println(ANSI_CYAN + "\nEnter a number: " + ANSI_RESET);
+            System.out.println(ANSI_CYAN + "\nPlease chose which corner you would like to start at: " + ANSI_RESET);
             position = input.nextInt();
 
             if (mapChoice == 1) {
                 if ((position == 1) || (position == 4) || (position == 13) || (position == 16)) {
-                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
                     return position;
                 } else {
                     System.out.println("Wrong input, please try again");
                 }
             } else if (mapChoice == 2) {
                 if ((position == 1) || (position == 5) || (position == 18) || (position == 22)) {
-                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
                     return position;
                 } else {
                     System.out.println("Wrong input, please try again");
                 }
             } else if (mapChoice == 3) {
                 if ((position == 1) || (position == 8) || (position == 57) || (position == 64)) {
-                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
                     return position;
                 }
             } else {
