@@ -47,8 +47,8 @@ public class Map {
         System.out.println("                  q__p");
         System.out.println();
 
-        System.out.println("  _^__                                                               __^__");
-        System.out.println("( ___ )-------------------------------------------------------------( ___ )");
+        System.out.println("  _^__                                                                __^__");
+        System.out.println("( ___ )--------------------------------------------------------------( ___ )");
         System.out.println(" | / |             The adventure will follow a map.                  | \\ |");
         System.out.println(" | / |      In each room of the map something may occur,             | \\ |");
         System.out.println(" | / |       either one or multiple monsters may appaer,             | \\ |");
@@ -59,17 +59,16 @@ public class Map {
         System.out.println(" | / |                                                               | \\ |");
         System.out.println(" | / |         When you have won all fights and visited              | \\ |");
         System.out.println(" | / |       all rooms on the map, you have won the game.            | \\ |");
-        System.out.println(" |___|   The game may also end if you get defeated during the game.  |___|");
-        System.out.println(" |___|    You will also have the choice to leave the map if needed.  |___|");
-        System.out.println(" |___|                                                               |___|");
+        System.out.println(" | / |   The game may also end if you get defeated during the game.  | \\ |");
+        System.out.println(" | / |    You will also have the choice to leave the map if needed.  | \\ |");
+        System.out.println(" | / |                                                               | \\ |");
         System.out.println(" |___|                         Good luck!                            |___|");
         System.out.println("(_____)-------------------------------------------------------------(_____)");
         System.out.println();
 
-          //System.out.println(" | / |                                                               | \\ |");
-          //System.out.println(" |___|                                                               |___|");
+        //System.out.println(" | / |                                                               | \\ |");
+        //System.out.println(" |___|                                                               |___|");
     }
-     
 
     public int selectMap() {
         System.out.println(ANSI_CYAN + "You can choose between the following adventures: " + ANSI_RESET);
@@ -97,110 +96,318 @@ public class Map {
 
     }
 
+    //Valde att lägga över texten i denna metod för att inte behöva göra om metoderna för mycket. Uträkningarna kommer i choiceofstartposition()
+    //I och med att vi har så många metoder i varandra som kallar, vill jag inte ändra om för mcýcket i dem, utan valde att göra en lätt lösning
+    //Loop, svårt att börja följa var man är och vad det är som sker
+    //Skulle behöva förtydliga var vi är i kartan. Vi har skrivit &&, är det istället för ||. 
     public void showMap() {
         if (mapChoice == 1) {
             mapSmall();
             System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
             System.out.println(ANSI_CYAN + "For map small: 1) NorthWest, 4) NorthEast, 13) SouthWest, 16) SoutEast" + ANSI_RESET);
-   
+
         } else if (mapChoice == 2) {
             mapMedium();
             System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
             System.out.println(ANSI_CYAN + "For map medium: 1) NorthWest, 5) NorthEast, 18) SouthWest, 22) SoutEast" + ANSI_RESET);
-            
+
         } else if (mapChoice == 3) {
             mapLarge();
             System.out.println(ANSI_CYAN + "\nPlease choose which corner you would like to start at: " + ANSI_RESET);
             System.out.println(ANSI_CYAN + "For map large: 1) NorthWest, 8) NorthEast, 57) SouthWest, 64) SoutEast" + ANSI_RESET);
-            
+
         }
 
     }
 
-   //Lös detta. 
     public int choiceOfStartPosition() {
-        while (true) {
-            System.out.println(ANSI_CYAN + "\nYour choice: " + ANSI_RESET);
+        boolean running = true;
+
+        while (running) {
+            System.out.println(ANSI_CYAN + "\nEnter a number: " + ANSI_RESET);
             position = input.nextInt();
-            //prova if else 
-            if(mapChoice == 1){
-                if ((position == 1)||(position == 4) || (position == 13) || (position == 16)) {
-                System.out.println("Your current position");
-                return position;
-            }
-             if(mapChoice == 2){
-            } if ((position == 1) || (position == 5) ||(position == 18) || (position == 22)) {
-                System.out.println("You chose this");
-                return position;
-            }
-            
-            if(mapChoice == 3){
-            } if ((position == 1) || (position == 13) ||(position == 57) || (position == 64)) {
-                System.out.println("You chose to start in the southwest corner");
-                return position;
-            } 
-            
-            /*else if ((position == 16) || (position == 22) || (position == 64)) {
-                System.out.println("You chose to start in the southeast corner");
-                return position;
-            }*/
-            
+
+            if (mapChoice == 1) {
+                if ((position == 1) || (position == 4) || (position == 13) || (position == 16)) {
+                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
+                    return position;
+                } else {
+                    System.out.println("Wrong input, please try again");
+                }
+            } else if (mapChoice == 2) {
+                if ((position == 1) || (position == 5) || (position == 18) || (position == 22)) {
+                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
+                    return position;
+                } else {
+                    System.out.println("Wrong input, please try again");
+                }
+            } else if (mapChoice == 3) {
+                if ((position == 1) || (position == 8) || (position == 57) || (position == 64)) {
+                    System.out.println("The corner position you chose: " + " " + position); //Se om det kommer ut rätt
+                    return position;
+                }
             } else {
-                System.out.println("Wrong input");
+                System.out.println("Wrong input, please try again");
+                return position;
             }
         }
+
+        return position;
     }
 
-    public void choiceOfDirection() {
-        boolean isRunning = true;
-        int x = 0;
-        int y = 0;
-        int choice;
+    public void choiceOfDirectionMapSmall() {
+        boolean running = true;
 
-        // while(isRunning){
-        // System.out.println("From your current position you may choose the following options");
-        System.out.println("Give me a position");
-        position = input.nextInt();
-        input.nextLine();
+        while (running) {
+            int choice;
+            System.out.println("-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----");
+            System.out.println("From your current position you may choose from the following options");
 
-        //Har det något med att göra att man har skrivit && istället för || ??
-        if ((position == 6) && (position == 7) && (position == 10) && (position == 11)) {
-            System.out.println("North:1, South:2, East:3 or West:4");
-        }
-        if ((position == 2) && (position == 3)) {
-            System.out.println("South:2, East:3 or West:4");
-        }
-        if ((position == 14) && (position == 15)) {
-            System.out.println("North:1, East:3 or West:4");
+            if (position == 6) {
+                System.out.println("North:1, South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 2;
+                }
+                if (choice == 2) {
+                    position = 10;
+                }
+                if (choice == 3) {
+                    position = 7;
+                }
+                if (choice == 4) {
+                    position = 5;
+                }
+            } else if (position == 7) {
+                System.out.println("North:1, South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 3;
+                }
+                if (choice == 2) {
+                    position = 11;
+                }
+                if (choice == 3) {
+                    position = 8;
+                }
+                if (choice == 4) {
+                    position = 6;
+                }
+            } else if (position == 10) {
+                System.out.println("North:1, South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 6;
+                }
+                if (choice == 2) {
+                    position = 14;
+                }
+                if (choice == 3) {
+                    position = 11;
+                }
+                if (choice == 4) {
+                    position = 9;
+                }
+            } else if ((position == 11)) {
+                System.out.println("North:1, South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 7;
+                }
+                if (choice == 2) {
+                    position = 15;
+                }
+                if (choice == 3) {
+                    position = 12;
+                }
+                if (choice == 4) {
+                    position = 10;
+                }
+            } else if (position == 2) {
+                System.out.println("South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 2) {
+                    position = 6;
+                }
+                if (choice == 3) {
+                    position = 3;
+                }
+                if (choice == 4) {
+                    position = 1;
+                }
+            } else if (position == 3) {
+                System.out.println("South:2, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 2) {
+                    position = 7;
+                }
+                if (choice == 3) {
+                    position = 4;
+                }
+                if (choice == 4) {
+                    position = 2;
+                }
+            } else if (position == 14) {
+                System.out.println("North:1, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 10;
+                }
+                if (choice == 3) {
+                    position = 15;
+                }
+                if (choice == 4) {
+                    position = 13;
+                }
+            } else if (position == 15) {
+                System.out.println("North:1, East:3 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 11;
+                }
+                if (choice == 3) {
+                    position = 16;
+                }
+                if (choice == 4) {
+                    position = 14;
+                }
+            } else if (position == 5) {
+                System.out.println("North:1, South:2 or East:3");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 1;
+                }
+                if (choice == 2) {
+                    position = 9;
+                }
+                if (choice == 3) {
+                    position = 6;
+                }
+            } else if (position == 9) {
+                System.out.println("North:1, South:2 or East:3");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 5;
+                }
+                if (choice == 2) {
+                    position = 13;
+                }
+                if (choice == 3) {
+                    position = 10;
+                }
+            } else if (position == 8) {
+                System.out.println("North:1, South:2 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 4;
+                }
+                if (choice == 2) {
+                    position = 12;
+                }
+                if (choice == 4) {
+                    position = 7;
+                }
+            } else if (position == 12) {
+                System.out.println("North:1, South:2 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 8;
+                }
+                if (choice == 2) {
+                    position = 16;
+                }
+                if (choice == 4) {
+                    position = 11;
+                }
+            } else if (position == 1) {
+                System.out.println("South:2 or East:3");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 2) {
+                    position = 5;
+                }
+                if (choice == 3) {
+                    position = 2;
+                }
+            } else if (position == 4) {
+                System.out.println("South:2 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 2) {
+                    position = 8;
+                }
+                if (choice == 4) {
+                    position = 3;
+                }
+            } else if (position == 13) {
+                System.out.println("North:1 or East:3");
+                System.out.println(ANSI_CYAN + "Make your choice" + ANSI_RESET);
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 9;
+                }
+                if (choice == 3) {
+                    position = 14;
+                }
+            } else if (position == 16) {
+                System.out.println("North:1 or West:4");
+                System.out.println("Make your choice");
+                choice = input.nextInt();
+                input.nextLine();
+                System.out.println(ANSI_PURPLE + "You chose to go " + " " + choice + ANSI_RESET);
+                if (choice == 1) {
+                    position = 12;
+                }
+                if (choice == 4) {
+                    position = 15;
+                }
+            }
 
-        }
-        if ((position == 5) && (position == 9)) {
-            System.out.println("North:1, South:2 or East:3");
+            visitedRoom();
+        }  //KALLAR I SLUTET PÅ VISITEDROOM
 
-        }
-        if ((position == 8) && (position == 12)) {
-            System.out.println("North:1, South:2 or West:4");
-
-        }
-        if (position == 1) {
-            System.out.println("South:2 or East:3");
-
-        }
-        if (position == 4) {
-            System.out.println("South:2 or West:4");
-
-        }
-        if (position == 13) {
-            System.out.println("North:1 or East:3");
-
-        }
-        if (position == 16) {
-            System.out.println("North:1 or West:4");
-
-        }
-        System.out.println("Please make your choice");
-        choice = input.nextInt();
-        input.nextLine();
     }
 
     public void mapSmall() {
@@ -430,14 +637,14 @@ public class Map {
 
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
-            System.out.println("------------------");
+            System.out.println("------------------------");
             //den inre for-loopen kolumnerna
             for (j = 0; j < columns; j++) {
                 System.out.print(mapMedium[i][j] + " | ");
             }
             System.out.println("");
         }
-        System.out.println("------------------");
+        System.out.println("------------------------");
     }
 
     public void visitedRoomLarge() {
@@ -456,13 +663,13 @@ public class Map {
 
         for (i = 0; i < rows; i++) {
             //bara snygga grejer för utskrift
-            System.out.println("------------------");
+            System.out.println("---------------------------------------");
             //den inre for-loopen kolumnerna
             for (j = 0; j < columns; j++) {
                 System.out.print(mapLarge[i][j] + " | ");
             }
             System.out.println("");
         }
-        System.out.println("------------------");
+        System.out.println("---------------------------------------");
     }
 }
